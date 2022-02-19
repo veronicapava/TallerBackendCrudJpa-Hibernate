@@ -1,7 +1,12 @@
 package com.example.tallerdosspring;
 
 import com.example.tallerdosspring.model.Employee;
+import com.example.tallerdosspring.model.Project;
+import com.example.tallerdosspring.model.Role;
 import com.example.tallerdosspring.repository.IEmployeeJpaRepository;
+import com.example.tallerdosspring.repository.IProjectJpaRepository;
+import com.example.tallerdosspring.repository.IRoleJpaRepository;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
@@ -16,20 +21,49 @@ public class NewEmployeeJpaRepositoryTest {
     @Autowired
     private IEmployeeJpaRepository repoEmpl;
 
+    @Autowired
+    private IRoleJpaRepository repoRole;
+
+    @Autowired
+    private IProjectJpaRepository repoProj;
+
     @Test
     public void saveEmployee(){
-        Employee john = new Employee("John", "Smith", "empl123");
-        Employee claire = new Employee("Claire", "Simpson", "empl124");
+
+        Role admin = new Role("ROLE_ADMIN");
+        Role dev = new Role("ROLE_DEV");
+
+        admin = repoRole.save(admin);
+        dev = repoRole.save(dev);
+
+        Project proj1 = new Project("proj1");
+        Project proj2 = new Project("proj2");
+        Project proj3 = new Project("proj3");
+
+        proj1 = repoProj.save(proj1);
+        proj2 = repoProj.save(proj2);
+        proj3 = repoProj.save(proj3);
+
+        Employee john = new Employee("John", "Smith", "empl123", dev);
+        Employee claire = new Employee("Claire", "Simpson", "empl124", admin);
+
+        john.getProjects().add(proj1);
+        john.getProjects().add(proj2);
+
+        claire.getProjects().add(proj1);
+        claire.getProjects().add(proj2);
+        claire.getProjects().add(proj3);
 
         repoEmpl.save(john);
         repoEmpl.save(claire);
 
-        //para que los inserte
+        //Este metodo inserta lo que hay en el repositorio en la db
         repoEmpl.flush();
 
-        assertEquals(2, repoEmpl.findAll().size());
-
-
+        Employee empl124 = repoEmpl.findByEmployeeId("empl124");
+        Assertions.assertEquals("Claire", empl124.getFirstName());
+        Assertions.assertEquals(2, repoEmpl.findAll().size());
+        Assertions.assertEquals(admin,empl124.getRole());
     }
 
 }
