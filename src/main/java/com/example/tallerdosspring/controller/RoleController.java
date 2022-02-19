@@ -1,6 +1,7 @@
 package com.example.tallerdosspring.controller;
 
 import com.example.tallerdosspring.model.Employee;
+import com.example.tallerdosspring.model.Role;
 import com.example.tallerdosspring.repository.IRoleJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,11 +21,11 @@ public class RoleController {
     IRoleJpaRepository roleRepository;
 
     @GetMapping()
-    public ResponseEntity<List<Employee>> getRoles(){
+    public ResponseEntity<List<Role>> getRoles(){
         try {
-            List<Employee> emplo = new ArrayList<Employee>();
+            List<Role> role = new ArrayList<Role>();
 
-            return new ResponseEntity<>(emplo, HttpStatus.OK);
+            return new ResponseEntity<>(role, HttpStatus.OK);
         } catch (Exception e){
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
