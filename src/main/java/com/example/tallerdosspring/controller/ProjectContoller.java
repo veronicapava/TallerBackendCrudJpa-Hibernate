@@ -54,4 +54,18 @@ public class ProjectContoller {
             return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
         }
     }
+
+    //Metodo para actualizar proyecto
+    @PutMapping("/upd/{id}")
+    public ResponseEntity<Project> updateProject(@PathVariable("id") long id, @RequestBody Project project) {
+        Optional<Project> upProject = projectRepository.findById(id);
+
+        if (upProject.isPresent()) {
+            Project project_ = upProject.get();
+            project_.setName(project.getName());
+            return new ResponseEntity<>(projectRepository.save(project_), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }
