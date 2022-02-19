@@ -1,5 +1,6 @@
 package com.example.tallerdosspring.controller;
 
+import com.example.tallerdosspring.model.Project;
 import com.example.tallerdosspring.model.Role;
 import com.example.tallerdosspring.repository.IRoleJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/role")
@@ -29,6 +31,17 @@ public class RoleController {
             return new ResponseEntity<>(role, HttpStatus.OK);
         } catch (Exception e){
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+
+    //Metodo para obtener roles por id
+    @GetMapping("{id}")
+    public ResponseEntity<Role> getRolesById(@PathVariable("id") long id){
+        Optional<Role> roleData = roleRepository.findById(id);
+        if (roleData.isPresent()) {
+            return new ResponseEntity<>(roleData.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 

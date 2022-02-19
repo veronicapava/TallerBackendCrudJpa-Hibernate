@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/project")
@@ -30,6 +31,18 @@ public class ProjectContoller {
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+
+    //Metodo para obtener proyectos por id
+    @GetMapping("{id}")
+    public ResponseEntity<Project> getProjectsById(@PathVariable("id") long id){
+        Optional<Project> projectData = projectRepository.findById(id);
+        if (projectData.isPresent()) {
+            return new ResponseEntity<>(projectData.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 
     //Metodo para agregar un proyecto
     @PostMapping("/post")
