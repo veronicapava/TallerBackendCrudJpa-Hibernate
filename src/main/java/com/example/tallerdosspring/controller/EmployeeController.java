@@ -56,4 +56,21 @@ public class EmployeeController {
             return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
         }
     }
+
+    //Metodo para actualizar empleado
+    @PutMapping("/upd/{id}")
+    public ResponseEntity<Employee> updateEmployee(@PathVariable("id") long id, @RequestBody Employee employee) {
+        Optional<Employee> upEmployee = employeeRepository.findById(id);
+
+        if (upEmployee.isPresent()) {
+            Employee employee_ = upEmployee.get();
+            employee_.setFirstName(employee.getFirstName());
+            employee_.setLastName(employee.getLastName());
+            employee_.setEmployeeId(employee.getEmployeeId());
+            employee_.setRole(employee.getRole());
+            return new ResponseEntity<>(employeeRepository.save(employee_), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }
