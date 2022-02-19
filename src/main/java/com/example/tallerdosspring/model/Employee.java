@@ -38,6 +38,7 @@ public class Employee {
         this.lastName = lastName;
         this.employeeId = employeeId;
         this.role = role;
+        //this.projects = (List<Project>) projects;
     }
 
     public Long getId() {
