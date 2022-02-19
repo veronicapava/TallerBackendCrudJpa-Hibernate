@@ -26,18 +26,18 @@ public class Employee {
 
     @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(name="employee_project",
-        joinColumns = @JoinColumn(name="employee_id"),
-        inverseJoinColumns = @JoinColumn(name="project_id")
-    )
+        joinColumns = {@JoinColumn(name = "employee_id")},
+        inverseJoinColumns = {@JoinColumn(name = "project_id")})
     private List<Project> projects = new ArrayList<Project>();
 
     public Employee(){
     }
 
-    public Employee(String firstName, String lastName, String employeeId) {
+    public Employee(String firstName, String lastName, String employeeId, Role role) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.employeeId = employeeId;
+        this.role = role;
     }
 
     public Long getId() {
@@ -70,6 +70,22 @@ public class Employee {
 
     public void setEmployeeId(String employeeId) {
         this.employeeId = employeeId;
+    }
+
+    public Role getRole(){
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public List<Project> getProjects() {
+        return projects;
+    }
+
+    public void setProjects(List<Project> projects) {
+        this.projects = projects;
     }
 
     @Override
