@@ -11,17 +11,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/employees")
 public class EmployeeController {
 
     @Autowired
     IEmployeeJpaRepository employeeRepository;
 
     //Metodo para obtener los empleados
-    @GetMapping("/employees")
+    @GetMapping()
     public ResponseEntity<List<Employee>> getEmployees(){
         try {
             List<Employee> emplo = new ArrayList<Employee>();
+            employeeRepository.findAll().forEach(emplo::add);
+            if (emplo.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
             return new ResponseEntity<>(emplo, HttpStatus.OK);
         } catch (Exception e){
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -29,7 +33,7 @@ public class EmployeeController {
     }
 
     //Metodo para agregar un empleado
-    @PostMapping("/employees/post")
+    @PostMapping("/post")
     public ResponseEntity<Employee> addNewEmployee(@RequestBody Employee employee){
         try{
             Employee emplo = employeeRepository.save(new Employee(employee.getFirstName(),
