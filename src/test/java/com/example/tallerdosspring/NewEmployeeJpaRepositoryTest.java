@@ -63,7 +63,6 @@ public class NewEmployeeJpaRepositoryTest {
         Employee empl124 = repoEmpl.findByEmployeeId("empl124");
         Assertions.assertEquals("Claire", empl124.getFirstName());
         Assertions.assertEquals(2, repoEmpl.findAll().size());
-        //Assertions.assertEquals(admin,empl124.getRole());
+        Assertions.assertEquals(admin,empl124.getRole());
     }
-
 }
