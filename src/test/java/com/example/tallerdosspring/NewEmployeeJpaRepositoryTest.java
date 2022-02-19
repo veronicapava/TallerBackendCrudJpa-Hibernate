@@ -1,17 +1,17 @@
 package com.example.tallerdosspring;
 
-
 import com.example.tallerdosspring.model.Employee;
 import com.example.tallerdosspring.repository.IEmployeeJpaRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+//@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+@AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 public class NewEmployeeJpaRepositoryTest {
     @Autowired
     private IEmployeeJpaRepository repoEmpl;
