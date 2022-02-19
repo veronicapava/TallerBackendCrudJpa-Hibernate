@@ -6,22 +6,20 @@ import com.example.tallerdosspring.repository.IEmployeeJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@RequestMapping("/employees")
+@RequestMapping("/api")
 public class EmployeeController {
 
     @Autowired
     IEmployeeJpaRepository employeeRepository;
 
     //Metodo para obtener los empleados
-    @GetMapping()
+    @GetMapping("/employees")
     public ResponseEntity<List<Employee>> getEmployees(){
         try {
             List<Employee> emplo = new ArrayList<Employee>();
@@ -32,6 +30,15 @@ public class EmployeeController {
         }
     }
 
-
-
+    //Metodo para agregar un empleado
+    @PostMapping("/employees")
+    public ResponseEntity<Employee> addNewEmployee(@RequestBody Employee employee){
+        try{
+            Employee emplo = employeeRepository.save(new Employee(employee.getFirstName(),
+                    employee.getLastName(), employee.getEmployeeId(), employee.getRole()));
+            return new ResponseEntity<>(emplo, HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
+        }
+    }
 }
