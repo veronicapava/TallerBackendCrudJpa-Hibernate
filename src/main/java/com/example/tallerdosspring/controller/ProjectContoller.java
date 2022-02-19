@@ -43,7 +43,6 @@ public class ProjectContoller {
         }
     }
 
-
     //Metodo para agregar un proyecto
     @PostMapping("/post")
     public ResponseEntity<Project> addNewProject(@RequestBody Project project){
@@ -66,6 +65,17 @@ public class ProjectContoller {
             return new ResponseEntity<>(projectRepository.save(project_), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    //Metodo para eliminar proyecto
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteProject(@PathVariable("id") long id) {
+        try {
+            projectRepository.deleteById(id);
+            return new ResponseEntity<>("Project delete",HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
         }
     }
 }

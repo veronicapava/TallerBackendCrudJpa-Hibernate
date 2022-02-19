@@ -69,4 +69,15 @@ public class RoleController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+
+    //Metodo para eliminar role
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteRole(@PathVariable("id") long id) {
+        try {
+            roleRepository.deleteById(id);
+            return new ResponseEntity<>("Role delete",HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+        }
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.tallerdosspring.controller;
 
 import com.example.tallerdosspring.model.Employee;
+import com.example.tallerdosspring.model.Project;
 import com.example.tallerdosspring.model.Role;
 import com.example.tallerdosspring.repository.IEmployeeJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,9 +69,21 @@ public class EmployeeController {
             employee_.setLastName(employee.getLastName());
             employee_.setEmployeeId(employee.getEmployeeId());
             employee_.setRole(employee.getRole());
+           // employee_.setProjects(employee.getProjects());
             return new ResponseEntity<>(employeeRepository.save(employee_), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    //Metodo para eliminar empleado
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<String> deleteEmployee(@PathVariable("id") long id) {
+        try {
+            employeeRepository.deleteById(id);
+            return new ResponseEntity<>("Employee delete",HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
         }
     }
 }
