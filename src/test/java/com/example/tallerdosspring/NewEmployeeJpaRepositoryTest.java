@@ -10,8 +10,8 @@ import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @DataJpaTest
-//@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
-@AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
+@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+//@AutoConfigureTestDatabase(connection = EmbeddedDatabaseConnection.H2)
 public class NewEmployeeJpaRepositoryTest {
     @Autowired
     private IEmployeeJpaRepository repoEmpl;
