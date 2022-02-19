@@ -2,6 +2,7 @@ package com.example.tallerdosspring.controller;
 
 
 import com.example.tallerdosspring.model.Employee;
+import com.example.tallerdosspring.model.Project;
 import com.example.tallerdosspring.repository.IProjectJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,11 +21,11 @@ public class ProjectContoller {
     IProjectJpaRepository projectRepository;
 
     @GetMapping()
-    public ResponseEntity<List<Employee>> getProjects(){
+    public ResponseEntity<List<Project>> getProjects(){
         try {
-            List<Employee> emplo = new ArrayList<Employee>();
+            List<Project> proj = new ArrayList<Project>();
 
-            return new ResponseEntity<>(emplo, HttpStatus.OK);
+            return new ResponseEntity<>(proj, HttpStatus.OK);
         } catch (Exception e){
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
         }
