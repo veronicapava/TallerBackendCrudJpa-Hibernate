@@ -55,4 +55,18 @@ public class RoleController {
             return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
         }
     }
+
+    //Metodo para actualizar role
+    @PutMapping("/upd/{id}")
+    public ResponseEntity<Role> updateRole(@PathVariable("id") long id, @RequestBody Role role) {
+        Optional<Role> upRole = roleRepository.findById(id);
+
+        if (upRole.isPresent()) {
+            Role role_ = upRole.get();
+            role_.setName(role.getName());
+            return new ResponseEntity<>(roleRepository.save(role_), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
 }
