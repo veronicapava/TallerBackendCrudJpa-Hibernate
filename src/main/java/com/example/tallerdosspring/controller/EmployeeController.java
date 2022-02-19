@@ -1,6 +1,5 @@
 package com.example.tallerdosspring.controller;
 
-
 import com.example.tallerdosspring.model.Employee;
 import com.example.tallerdosspring.repository.IEmployeeJpaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +22,6 @@ public class EmployeeController {
     public ResponseEntity<List<Employee>> getEmployees(){
         try {
             List<Employee> emplo = new ArrayList<Employee>();
-
             return new ResponseEntity<>(emplo, HttpStatus.OK);
         } catch (Exception e){
             return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
@@ -31,12 +29,12 @@ public class EmployeeController {
     }
 
     //Metodo para agregar un empleado
-    @PostMapping("/employees")
+    @PostMapping("/employees/post")
     public ResponseEntity<Employee> addNewEmployee(@RequestBody Employee employee){
         try{
             Employee emplo = employeeRepository.save(new Employee(employee.getFirstName(),
                     employee.getLastName(), employee.getEmployeeId(), employee.getRole()));
-            return new ResponseEntity<>(emplo, HttpStatus.OK);
+            return new ResponseEntity<>(emplo, HttpStatus.CREATED);
         } catch (Exception e){
             return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
         }
