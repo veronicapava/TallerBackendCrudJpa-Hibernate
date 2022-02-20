@@ -50,8 +50,9 @@ public class EmployeeController {
     @PostMapping("/post")
     public ResponseEntity<Employee> addNewEmployee(@RequestBody Employee employee){
         try{
+
             Employee emplo = employeeRepository.save(new Employee(employee.getFirstName(),
-                    employee.getLastName(), employee.getEmployeeId(), employee.getRole()));
+                    employee.getLastName(), employee.getEmployeeId(), employee.getRole(), employee.getProjects()));
             return new ResponseEntity<>(emplo, HttpStatus.CREATED);
         } catch (Exception e){
             return new ResponseEntity<>(null, HttpStatus.EXPECTATION_FAILED);
@@ -69,7 +70,7 @@ public class EmployeeController {
             employee_.setLastName(employee.getLastName());
             employee_.setEmployeeId(employee.getEmployeeId());
             employee_.setRole(employee.getRole());
-           // employee_.setProjects(employee.getProjects());
+            employee_.setProjects(employee.getProjects());
             return new ResponseEntity<>(employeeRepository.save(employee_), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);

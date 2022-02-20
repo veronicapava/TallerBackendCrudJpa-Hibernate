@@ -13,6 +13,7 @@ import org.springframework.boot.jdbc.EmbeddedDatabaseConnection;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -43,12 +44,18 @@ public class NewEmployeeJpaRepositoryTest {
         Project proj2 = new Project("proj2");
         Project proj3 = new Project("proj3");
 
+        List<Project> project = new ArrayList<Project>();
+        project.set(0, proj1);
+        project.set(1, proj2);
+        project.set(2, proj3);
+
         proj1 = repoProj.save(proj1);
         proj2 = repoProj.save(proj2);
         proj3 = repoProj.save(proj3);
 
-        Employee john = new Employee("John", "Smith", "empl123", dev);
-        Employee claire = new Employee("Claire", "Simpson", "empl124", admin);
+
+        Employee john = new Employee("John", "Smith", "empl123", dev, project);
+        Employee claire = new Employee("Claire", "Simpson", "empl124",admin, project);
 
         john.getProjects().add(proj1);
         john.getProjects().add(proj2);
